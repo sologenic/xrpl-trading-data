@@ -32,10 +32,17 @@ Current Trading data API rate limit is 100 rpm per IP. If you need a higher limi
 #### Params
 
 - `symbol` _required_ - symbol for which OHLC should be returned. NOTE: `symbol` should be urlsafe encoded.
+**NOTE: 
+`base_currencycode`+`base_issuer`/`second_currencycode`+`second_issuer`
+1) if currncycode = XRP, then you do not need issuer
+2) you must change `+` and `/` to `%2B` and `%2F`
+so you finaly symbol will: USD`%2B`rD9W7ULveavz8qBGM1R5jMgK2QKsEDPQVi`%2F`XRP
+
 - `period` _required_ - one of `["1m","3m","5m","15m","30m","1h","3h","6h","12h","1d","3d","1w"]`
 - `from` _required_ - unix timestamp of OHLC start
 - `to` _required_ - unix timestamp of OHLC end
-
+**NOTE: API work with UTC time. `start date = 1970/01/01`, time must be in seconds - `14.09.2022 11:30:15 = 1663155015 sec`
+how to count: `(date - start_date).TotalSeconds`
 **NOTE: API has limitation of 2000 points per request**
 
 It means that you can request 2000 of 1m points (2000/60/24) ~1.3 days. Or 2000 of 1h points ~83.3 days etc.
